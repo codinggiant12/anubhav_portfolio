@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 import Navbar from "./components/Navbar";
@@ -25,18 +25,20 @@ export default function Page() {
   return (
     <div className="relative min-h-screen  text-gray-900">
       <Navbar sections={sections} />
-      <section id="home">
-        <HomeSection />
-      </section>
-      <section id="about">
-        <AboutSection />
-      </section>
-      <section id="projects">
-        <ProjectsSection />
-      </section>
-      <section id="contact">
-        <ContactSection />
-      </section>
+      <Suspense fallback={<div>Loading...</div>}>
+        <section id="home">
+          <HomeSection />
+        </section>
+        <section id="about">
+          <AboutSection />
+        </section>
+        <section id="projects">
+          <ProjectsSection />
+        </section>
+        <section id="contact">
+          <ContactSection />
+        </section>
+      </Suspense>
       <Footer />
       <main className=""></main>\
       <div
