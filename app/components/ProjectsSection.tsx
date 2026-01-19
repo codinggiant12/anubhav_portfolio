@@ -1,6 +1,10 @@
 "use client";
 import React from "react";
 import { motion, Variants } from "framer-motion";
+import { userdata } from "../personaldata/data";
+import Image from "next/image";
+import { FaGithub } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
 
 // --- Interface ---
 interface Project {
@@ -8,7 +12,7 @@ interface Project {
   subtitle: string;
   imageUrl: string;
 }
-
+// console.log(userdata.projects);
 // --- Project Data ---
 const projects: Project[] = [
   {
@@ -77,25 +81,49 @@ const ProjectsSection: React.FC = () => {
 
       {/* Project Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 max-w-6xl">
-        {projects.map((project, index) => (
+        {userdata.projects.map((project, index) => (
           <motion.div
             key={index}
-            className="bg-neutral-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-yellow-500/10 transition-shadow duration-500"
+            className=" rounded-2xl overflow-hidden shadow-lg hover:shadow-yellow-500/10 transition-shadow duration-500"
             initial="hidden"
             whileInView="show"
             variants={index % 2 === 0 ? fadeInLeft : fadeInRight}
             viewport={{ once: false, amount: 0.3 }}
           >
-            <img
-              src={project.imageUrl}
+            <Image src={project?.imageLink} alt={project.title} />
+            {/* <img
+              src={project?.imageLink}
               alt={project.title}
               className="w-full h-60 object-cover hover:scale-105 transition-transform duration-700"
-            />
+            /> */}
             <div className="p-6">
               <h3 className="text-2xl font-bold text-yellow-400 mb-2">
                 {project.title}
               </h3>
-              <p className="text-gray-400 text-sm">{project.subtitle}</p>
+              <p className="text-gray-400 text-sm">{project.discription}</p>
+            </div>
+            <div className="flex justify-between gap-4 mt-2 mb-4 px-8  ">
+              <a
+                href={project.projectLink}
+                className="flex items-center gap-2 px-4 py-2 bg-amber-400 hover:bg-amber-500 text-white font-semibold rounded-full transition-all duration-300 hover:-translate-y-1 shadow-lg shadow-indigo-500/20"
+              >
+                <span>Visit Project</span>
+                <FiExternalLink />
+              </a>
+
+              <a
+                href={project.gitHubLink}
+                className="flex items-center gap-2 px-4 py-2  hover:bg-zinc-800 text-zinc-700 hover:text-white font-semibold rounded-full border border-zinc-700 transition-all duration-300"
+              >
+                {project.gitHubLink === "" ? (
+                  <span>Internship Project</span>
+                ) : (
+                  <>
+                    <FaGithub />
+                    <span>Source Code</span>
+                  </>
+                )}
+              </a>
             </div>
           </motion.div>
         ))}
